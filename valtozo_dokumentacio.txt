@@ -1,0 +1,308 @@
+Biostatisztika final project - valtozodokumentacio
+
+Adatfajl:
+adult22csv/adult22.csv
+
+Forras:
+2022 National Health Interview Survey (NHIS), Sample Adult adatbazis.
+
+Fontos megjegyzes:
+A nyers CSV-ben a projektben hasznalt valtozok tobbnyire integer tipusuak,
+de ezek kozul sok kodolt kategorikus valtozo. A 7, 8, 9, 97, 98, 99 jellegu
+ertekeket altalaban hianyzo ertekkent kell kezelni.
+
+
+1. Elemzesben hasznalt valtozok
+
+Elemzesbeli nev: phq8_score
+NHIS valtozok: PHQ81_A - PHQ88_A
+Nyers tipus: integer
+Elemzesbeli tipus: folytonos/numerikus
+Jelentes: PHQ-8 depresszios tunetpontszam
+Szerep: kimeneti valtozo
+
+Elemzesbeli nev: gad7_score
+NHIS valtozok: GAD71_A - GAD77_A
+Nyers tipus: integer
+Elemzesbeli tipus: folytonos/numerikus
+Jelentes: GAD-7 szorongasos tunetpontszam
+Szerep: fo magyarazo valtozo
+
+Elemzesbeli nev: phq_category
+NHIS valtozo: PHQCAT_A
+Nyers tipus: integer
+Elemzesbeli tipus: ordinalis faktor
+Jelentes: depresszios tunetek sulyossagi kategoriaja
+Szerep: leiro statisztika / erzekenysegi elemzes
+
+Elemzesbeli nev: gad_category
+NHIS valtozo: GADCAT_A
+Nyers tipus: integer
+Elemzesbeli tipus: ordinalis faktor
+Jelentes: szorongasos tunetek sulyossagi kategoriaja
+Szerep: TableOne csoportosito valtozo
+
+Elemzesbeli nev: age
+NHIS valtozo: AGEP_A
+Nyers tipus: integer
+Elemzesbeli tipus: numerikus
+Jelentes: eletkor; 85 evnel top-coded
+Szerep: kovarians / confounder
+
+Elemzesbeli nev: sex
+NHIS valtozo: SEX_A
+Nyers tipus: integer
+Elemzesbeli tipus: faktor
+Jelentes: nem
+Szerep: kovarians / confounder
+
+Elemzesbeli nev: health_status
+NHIS valtozo: PHSTAT_A
+Nyers tipus: integer
+Elemzesbeli tipus: ordinalis faktor
+Jelentes: onertekelt altalanos egeszsegi allapot
+Szerep: kovarians / confounder
+
+Elemzesbeli nev: smoking
+NHIS valtozo: SMKCIGST_A
+Nyers tipus: integer
+Elemzesbeli tipus: faktor
+Jelentes: dohanyzasi statusz
+Szerep: eletmodbeli kovarians
+
+Elemzesbeli nev: alcohol
+NHIS valtozo: DRKSTAT_A
+Nyers tipus: integer
+Elemzesbeli tipus: faktor
+Jelentes: alkoholfogyasztasi statusz
+Szerep: eletmodbeli kovarians
+
+Elemzesbeli nev: physical_activity
+NHIS valtozo: PA18_02R_A
+Nyers tipus: integer
+Elemzesbeli tipus: ordinalis faktor
+Jelentes: aerob fizikai aktivitasi iranyelv teljesitese
+Szerep: eletmodbeli kovarians
+
+Elemzesbeli nev: bmi_cat
+NHIS valtozo: BMICAT_A
+Nyers tipus: integer
+Elemzesbeli tipus: faktor / ordinalis faktor
+Jelentes: BMI-kategoria
+Szerep: kovarians
+
+Elemzesbeli nev: education
+NHIS valtozo: EDUCP_A
+Nyers tipus: integer
+Elemzesbeli tipus: ordinalis faktor
+Jelentes: iskolai vegzettseg
+Szerep: kovarians
+
+
+2. PHQ-8 itemek kodolasa
+
+Valtozok:
+PHQ81_A, PHQ82_A, PHQ83_A, PHQ84_A, PHQ85_A, PHQ86_A, PHQ87_A, PHQ88_A
+
+Kodolas:
+1 = egyaltalan nem
+2 = tobb napon
+3 = a napok tobb mint feleben
+4 = majdnem minden nap
+7 = refused / visszautasitotta
+8 = not ascertained / nem megallapithato
+9 = don't know / nem tudja
+
+Elemzeshez:
+1-4 valaszokbol 0-3 pont lesz:
+pont = valasz - 1
+
+7, 8, 9 ertekek:
+hianyzo ertekkent kezelendo
+
+PHQ-8 osszpontszam:
+phq8_score = PHQ81_A + PHQ82_A + PHQ83_A + PHQ84_A +
+             PHQ85_A + PHQ86_A + PHQ87_A + PHQ88_A
+
+Vegso tartomany:
+0-24 pont
+
+
+3. GAD-7 itemek kodolasa
+
+Valtozok:
+GAD71_A, GAD72_A, GAD73_A, GAD74_A, GAD75_A, GAD76_A, GAD77_A
+
+Kodolas:
+1 = egyaltalan nem
+2 = tobb napon
+3 = a napok tobb mint feleben
+4 = majdnem minden nap
+7 = refused / visszautasitotta
+8 = not ascertained / nem megallapithato
+9 = don't know / nem tudja
+
+Elemzeshez:
+1-4 valaszokbol 0-3 pont lesz:
+pont = valasz - 1
+
+7, 8, 9 ertekek:
+hianyzo ertekkent kezelendo
+
+GAD-7 osszpontszam:
+gad7_score = GAD71_A + GAD72_A + GAD73_A + GAD74_A +
+             GAD75_A + GAD76_A + GAD77_A
+
+Vegso tartomany:
+0-21 pont
+
+
+4. Kategorias valtozok kodolasa
+
+PHQCAT_A - depresszios tunetek sulyossaga:
+1 = none/minimal
+2 = mild
+3 = moderate
+4 = severe
+8 = hianyzo / not ascertained
+
+GADCAT_A - szorongasos tunetek sulyossaga:
+1 = none/minimal
+2 = mild
+3 = moderate
+4 = severe
+8 = hianyzo / not ascertained
+
+SEX_A - nem:
+1 = ferfi
+2 = no
+7 = refused / hianyzo
+9 = don't know / hianyzo
+
+PHSTAT_A - onertekelt egeszsegi allapot:
+1 = excellent
+2 = very good
+3 = good
+4 = fair
+5 = poor
+7 = refused / hianyzo
+9 = don't know / hianyzo
+
+SMKCIGST_A - dohanyzasi statusz:
+1 = current every day smoker
+2 = current some day smoker
+3 = former smoker
+4 = never smoker
+5 = smoker, current status unknown
+9 = unknown if ever smoked
+
+Elemzeshez:
+1-4 hasznalhato kategorias valtozokent.
+5 es 9 inkabb hianyzo/bizonytalan statuszkent kezelendo.
+
+DRKSTAT_A - alkoholfogyasztasi statusz:
+1 = lifetime abstainer
+2 = former infrequent
+3 = former regular
+4 = former, unknown frequency
+5 = current infrequent
+6 = current light
+7 = current moderate
+8 = current heavier
+9 = current drinker, frequency/level unknown
+10 = drinking status unknown
+
+Elemzeshez:
+1-8 hasznalhato kategorias valtozokent.
+9 es 10 inkabb hianyzo/bizonytalan statuszkent kezelendo.
+
+PA18_02R_A - aerob fizikai aktivitasi iranyelv teljesitese:
+1 = inactive
+2 = insufficiently active
+3 = sufficiently active
+8 = hianyzo / not ascertained
+
+BMICAT_A - BMI-kategoria:
+1 = underweight
+2 = healthy weight
+3 = overweight
+4 = obese
+9 = unknown / hianyzo
+
+EDUCP_A - iskolai vegzettseg:
+1 = grade 1-11
+2 = 12th grade, no diploma
+3 = GED or equivalent
+4 = high school graduate
+5 = some college, no degree
+6 = associate degree: occupational/technical/vocational
+7 = associate degree: academic program
+8 = bachelor's degree
+9 = master's degree
+10 = professional school or doctoral degree
+97 = refused / hianyzo
+99 = don't know / hianyzo
+
+
+5. Tervezett regresszios modell
+
+Kutatasi kerdes:
+Osszefugg-e a szorongasos tunetek sulyossaga a depresszios tunetek
+sulyossagaval felnottek koreben, es fennmarad-e ez az osszefugges eletkorra,
+nemre, onertekelt egeszsegi allapotra es eletmodbeli tenyezokre korrigalva?
+
+Tervezett modell:
+phq8_score ~ gad7_score + age + sex + health_status +
+             smoking + alcohol + physical_activity + bmi_cat + education
+
+Modelltipus:
+tobbszoros linearis regresszio
+
+Ertelmezes:
+A becsult egyutthatok kapcsolatokent ertelmezendok, nem oksagi hataskent,
+mivel az elemzes keresztmetszeti, megfigyeleses adatokon alapul.
+
+
+6. TableOne javaslat
+
+Elsodleges csoportosito valtozo:
+gad_category
+
+Indoklas:
+A kutatasi kerdes kozponti magyarazo valtozoja a szorongasos tunetek
+sulyossaga, ezert a leiro statisztikaban logikus a mintat GAD-7 sulyossagi
+kategoriak szerint bemutatni.
+
+Alternativ csoportositas:
+sex vagy korcsoportok:
+18-39 ev
+40-59 ev
+60+ ev
+
+
+7. Hianyzo adatok es imputacio
+
+Az NHIS valtozokban a hianyzo valaszok sokszor nem NA-kent, hanem specialis
+kodokkal szerepelnek. Ezeket az imputacio es a modell elott NA-ra kell
+atalakitani.
+
+Imputaciohoz javasolt valtozok:
+PHQ81_A - PHQ88_A
+GAD71_A - GAD77_A
+AGEP_A
+SEX_A
+PHSTAT_A
+SMKCIGST_A
+DRKSTAT_A
+PA18_02R_A
+BMICAT_A
+EDUCP_A
+
+Elvegzendo imputacios lepesek:
+1. Hianyzo adatok felt terkepzese
+2. Tobb imputacios algoritmus osszehasonlitasa
+3. Kolmogorov-Smirnov (KS) osszehasonlito grafikon
+4. Mean Absolute Error (MAE) osszehasonlito grafikon
+5. Legjobb algoritmus kivalasztasa
+6. Egy valtozo eredeti es imputalt eloszlasanak bemutatasa hisztogramon
+
