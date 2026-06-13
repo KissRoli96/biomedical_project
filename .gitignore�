@@ -1,0 +1,12 @@
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.positai/
+
+*.pdf
+*.html
+*.docx
+*.odt
+*.zip
+*.Rmd
